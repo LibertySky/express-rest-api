@@ -1,28 +1,30 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 // Create express app
 const app = express();
 
 // Database
-mongoose.connect('mongodb://localhost/motivation', {
+mongoose.connect('mongodb://localhost/quotesApp', {
 	useNewUrlParser: true,
-	useUnifiedTopology: true
+	useUnifiedTopology: true,
 });
 
 const db = mongoose.connection;
 
 db.once('open', () => {
-	console.log("Connected to MongoDB database...");
+	console.log('Connected to MongoDB database...');
 });
 
 // Middleware
+app.use(cors());
 app.use(bodyParser.json());
 
 // Routes
 app.get('/', (req, res) => {
-	res.send("Hello, World!");
+	res.send('Hello, World!');
 });
 
 const QuotesRoute = require('./routes/Quotes');
@@ -30,4 +32,4 @@ const QuotesRoute = require('./routes/Quotes');
 app.use('/quotes', QuotesRoute);
 
 // Starting server
-app.listen(3000, console.log("Listening on port 3000"));
+app.listen(5000, console.log('Listening on port 5000'));
